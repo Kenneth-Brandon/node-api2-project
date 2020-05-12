@@ -131,4 +131,24 @@ router.post('/:id/comments', (request, response) => {
     });
 });
 
+router.get('/:id/comments', (request, response) => {
+  const id = request.params.id;
+
+  db.findPostComments(id)
+    .then((comment) => {
+      if (comment) {
+        response.status(200).json(comment);
+      } else {
+        response.status(404).json({
+          message: 'The post with the specified ID does not exist.',
+        });
+      }
+    })
+    .catch((error) => {
+      response.status(500).json({
+        error: 'The comments information could not be retrieved.',
+      });
+    });
+});
+
 module.exports = router;
