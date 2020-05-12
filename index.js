@@ -1,5 +1,11 @@
+// create a server and start it listening
+// add an endpoint that returns all the messages for a hub
+// add an endpoint for adding new message to a hub
+
 const server = require('./server');
 
-server.listen(5000, () => {
-  console.log('Server running on http://localhost:5000');
+const PORT = 5000;
+
+server.listen(PORT, () => {
+  console.log(`\n*** Server Running on http://localhost:${PORT} ***\n`);
 });
