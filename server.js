@@ -1,4 +1,5 @@
 const express = require('express');
+const blogRouter = require('./router/blogRouter');
 
 const server = express();
 
