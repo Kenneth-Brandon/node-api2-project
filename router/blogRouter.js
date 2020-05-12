@@ -98,4 +98,37 @@ router.put('/:id', (request, response) => {
     });
 });
 
+router.post('/:id/comments', (request, response) => {
+  const body = request.body;
+  const id = request.params.id;
+
+  if (!body.text || !body.post_id) {
+    response.status(400).json({
+      errorMessage: 'Please provide text for the comment or post id.',
+    });
+  } else if (body.post_id != id) {
+    response.status(401).json({
+      errorMessage: 'Post_id must match post.',
+    });
+  } else
+    db.findById(id).then((post) => {
+      if (post) {
+        db.insertComment(body)
+          .then((comment) => {
+            response.status(201).json(comment);
+          })
+          .catch((error) => {
+            response.status(500).json({
+              error:
+                'There was an error while saving the comment to the database',
+            });
+          });
+      } else {
+        response
+          .status(400)
+          .json({ error: `Could not find post with id ${id}` });
+      }
+    });
+});
+
 module.exports = router;
