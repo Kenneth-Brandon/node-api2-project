@@ -3,20 +3,20 @@ const db = require('../data/db');
 
 const router = express.Router();
 
-router.get('/', (request, response) => {
+router.get('/', (require, response) => {
   db.find(require.query)
     .then((post) => {
       response.status(200).json(post);
     })
     .catch((error) => {
       response.status(500).json({
-        message: 'The posts information could not be retrived.',
+        error: 'The posts information could not be retrieved.',
       });
     });
 });
 
-router.get('/:id', (request, response) => {
-  db.findById(request.params.id)
+router.get('/:id', (require, response) => {
+  db.findById(require.params.id)
     .then((post) => {
       if (post) {
         response.status(200).json(post);
@@ -33,8 +33,8 @@ router.get('/:id', (request, response) => {
     });
 });
 
-router.post('/', (request, response) => {
-  const { title, contents } = request.body;
+router.post('/', (require, response) => {
+  const { title, contents } = require.body;
 
   if (!title || !contents) {
     response.status(400).json({
@@ -42,7 +42,7 @@ router.post('/', (request, response) => {
     });
   }
 
-  db.insert(request.body)
+  db.insert(require.body)
     .then((post) => {
       response.status(201).json(post);
     })
@@ -53,8 +53,8 @@ router.post('/', (request, response) => {
     });
 });
 
-router.delete('/:id', (request, response) => {
-  db.remove(request.params.id)
+router.delete('/:id', (require, response) => {
+  db.remove(require.params.id)
     .then((deleteUser) => {
       if (deleteUser) {
         response.status(204).end();
@@ -71,9 +71,9 @@ router.delete('/:id', (request, response) => {
     });
 });
 
-router.put('/:id', (request, response) => {
-  const changes = request.body;
-  const { title, contents } = request.body;
+router.put('/:id', (require, response) => {
+  const changes = require.body;
+  const { title, contents } = require.body;
 
   if (!title || !contents) {
     response.status(400).json({
@@ -81,7 +81,7 @@ router.put('/:id', (request, response) => {
     });
   }
 
-  db.update(request.params.id, changes)
+  db.update(require.params.id, changes)
     .then((post) => {
       if (post) {
         response.status(200).json(post);
@@ -98,9 +98,9 @@ router.put('/:id', (request, response) => {
     });
 });
 
-router.post('/:id/comments', (request, response) => {
-  const body = request.body;
-  const id = request.params.id;
+router.post('/:id/comments', (require, response) => {
+  const body = require.body;
+  const id = require.params.id;
 
   if (!body.text || !body.post_id) {
     response.status(400).json({
@@ -131,8 +131,8 @@ router.post('/:id/comments', (request, response) => {
     });
 });
 
-router.get('/:id/comments', (request, response) => {
-  const id = request.params.id;
+router.get('/:id/comments', (require, response) => {
+  const id = require.params.id;
 
   db.findPostComments(id)
     .then((comment) => {
