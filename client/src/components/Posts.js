@@ -7,7 +7,7 @@ const Posts = () => {
   useEffect(() => {
     function fetchData() {
       axios
-        .get('http://localhost:4000/api/posts')
+        .get('http://localhost:5000/api/posts')
         .then((info) => setPosts(info.data))
         .catch((error) => console.log(error));
     }
@@ -17,16 +17,16 @@ const Posts = () => {
   return (
     <div>
       {console.log(posts)}
-      <div className="title">
+      <div className="pageTitle">
         <h1>Lord of the Rings Posts</h1>
       </div>
       <div className="posts">
         {posts.map((post) => (
           <div key={post.id} className="post">
-            <h3>
+            <h3 className="postTitle">
               {post.id}) {post.title}
             </h3>
-            <p>{post.contents}</p>
+            <p className="postContents">{post.contents}</p>
           </div>
         ))}
       </div>
