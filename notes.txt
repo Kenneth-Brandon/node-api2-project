@@ -1,0 +1,72 @@
+1. Explain how routing works in an express application
+
+You define routing using methods of the Express app object that correspond to HTTP methods; for example, app. ... In other words, the application “listens” for requests that match the specified route(s) and method(s), and when it detects a match, it calls the specified callback function.
+
+2. Read data from the query string, request body and route parameters
+
+Route Parameters:
+We define route parameters by adding it to the URL with a colon (:) in front of it. Express adds it to the .params property part of the request object. (/hobbits/:id) The value for a route parameter will always be string, even if the value passed is numeric. Express routing has support for multiple route parameters. (/hobbits/:id/friends/:friendId)
+
+Request Body:
+Add the line: server.use(express.json()); after the express application has been created. Read the data from the body property that Express adds to the request object. Express takes all the information that the client added to the body and makes it available as a nice JavaScript object.
+
+Query String:
+The query string is another strategy using the URL to pass information from clients to the server. It is structured as a set of key/value pairs, where each pair takes the form of key=value and pairs are separated by an &. To mark the beginning of the query string, we add ? and the end of the URL, followed by the set of key/value pairs. An example of a query string would be: https://www.google.com/search?q=lambda&tbo=1. To read values from the query string, we use the req.query object added by Express. There will be a key and a value in the req.query object for each key/value pair found in the query string.
+
+3. Explain the basics of the REST architectural style
+
+When designing a RESTful Web API, keep the following principles in mind:
+
+Everything is a resource.
+Each resource is accessible via a unique URI.
+Resources can have multiple representations.
+Communication happens over a stateless protocol (HTTP).
+Resource management happens via HTTP methods.
+
+4. Use Express Routers to organize Web API code
+
+// inside /api/apiRoutes.js <- this can be place anywhere and called anything
+const express = require('express');
+
+// if the other routers are not nested inside /api then the paths would change
+const userRoutes = require('./users/userRoutes');
+const productRoutes = require('./products/productRoutes');
+const clientRoutes = require('./clients/clientRoutes');
+
+const router = express.Router(); // notice the Uppercase R
+
+// this file will only be used when the route begins with "/api"
+// so we can remove that from the URLs, so "/api/users" becomes simply "/users"
+router.use('/users', userRoutes);
+router.use('/products', productRoutes);
+router.use('/clients', clientRoutes);
+
+// .. and any other endpoint related to the user's resource
+
+// after the route has been fully configured, then we export it so it can be required where needed
+module.exports = router; // standard convention dictates that this is the last line on the file
+
+Q's from slack
+1. How do we import and export modules in Nodejs?
+
+const server = express();; and module.exports = server
+
+2. What properties are available in req.params if the request is sent to this route /users/:id/subject/:subjectId
+
+id and subjectId
+
+3. What are the key value pairs from the below query string? example.com/find?name=lyn&state=ca&isTeamLead=true
+
+name=lyn, state=ca, and isTeamLead=true
+
+4. What is REST?
+
+REpresentational State Transfer
+
+5. What are Express routers?
+
+Express Routers are a way to split an application into sub-applications to make it more modular and easier to maintain and reason about.
+
+6. What are some principles you should follow when designing a RESTful Web API?
+
+Everything is a resource. Each resource is accessible via a unique URI. Resources can have multiple representations. Communication happens over a stateless protocol (HTTP). Resource management happens via HTTP methods.
