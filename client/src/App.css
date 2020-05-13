@@ -1,0 +1,21 @@
+body {
+  background-color: #000000;
+}
+.App {
+  color: #e7d9bd;
+}
+.pageTitle {
+  text-align: center;
+  margin: 100px;
+  text-decoration: underline;
+  font-size: 22px;
+}
+.posts {
+  margin: 50px;
+}
+.post {
+  margin-bottom: 100px;
+}
+.postContents {
+  margin-left: 25px;
+}
