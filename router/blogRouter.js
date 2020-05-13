@@ -3,13 +3,6 @@ const db = require('../data/db'); // import our database so our route handler wi
 
 const router = express.Router(); // create a router object, configure it with route handlers and other middleware, and export it at the end
 
-router.get('/', (request, response) => {
-  response.send(`
-  <h2>Lambda Hubs API</h2>
-  <p>Welcome to the Lambda Hubs API</p>
-  `);
-});
-
 // |POST| /api/posts | Creates a post using the information sent inside the `request body`.
 router.post('/', (require, response) => {
   const { title, contents } = require.body;
